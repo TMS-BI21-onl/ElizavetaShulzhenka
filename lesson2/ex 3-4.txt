@@ -1,0 +1,51 @@
+Ex. 3 
+STRING_AGG
+STDEV
+VARP
+
+
+
+
+
+
+Ex. 4
+
+a)
+SELECT DISTINCT PersonType
+FROM Person.Person 
+WHERE LastName = 'M%'
+OR NOT EmailPromotion = 1
+
+ANSWER : 6 ROWS
+
+b) 
+SELECT TOP 3 *
+FROM Sales.SpecialOffer
+WHERE  StartDate > '2013-01-01'
+AND EndDate < '2014-01-01'
+ORDER BY DiscountPct DESC
+
+
+c) 
+SELECT MIN(Weight) AS Weight,
+       MAX(Size) AS Size
+FROM Production.Product
+
+ANSWER : Weight 2.12	
+         Size XL
+
+d) 
+SELECT MIN(Weight) AS Weight,
+       MAX(Size) AS Size, ProductSubcategoryID
+FROM Production.Product
+GROUP BY ProductSubcategoryID
+
+
+e) 
+SELECT MIN(Weight) AS Weight,
+       MAX(Size) AS Size, ProductSubcategoryID
+FROM Production.Product
+WHERE  Color IS NOT NULL
+GROUP BY ProductSubcategoryID
+
+

@@ -1,0 +1,118 @@
+EX.3
+IF THE VALUES ARE THE SAME
+
+EX.2
+
+A.
+
+SELECT *
+FROM  Production.UnitMeasure
+WHERE UnitMeasureCode = 'T%'
+
+ANSWER: THE COLUMN UnitMeasureCode DON'T HAVE NAMES NAMES STARTING WITH THE LETTER "T"
+
+SELECT DISTINCT UnitMeasureCode
+FROM  Production.UnitMeasure
+
+ANSWER: TOTAL 38 ROWS
+
+1. 
+INSERT INTO Production.UnitMeasure (UnitMeasureCode, Name, ModifiedDate)
+VALUES ('TT1', 'Test 1', '2020-09-09')
+
+2.
+INSERT INTO Production.UnitMeasure (UnitMeasureCode, Name, ModifiedDate)
+VALUES ('TT2', 'Test 2', GETDATE())
+
+
+SELECT *
+FROM  Production.UnitMeasure
+WHERE UnitMeasureCode = 'T%'
+
+ANSWER: 2 ROWS
+
+B.
+
+SELECT *
+INTO Production.UnitMeasureTest2
+FROM Production.UnitMeasure
+WHERE 1 = 0
+
+
+INSERT INTO Production.UnitMeasureTest2 (UnitMeasureCode, Name, ModifiedDate)
+VALUES 
+    ('TT1', 'Test 1', '2020-09-09'),
+    ('TT2', 'Test 2', GETDATE())
+
+SELECT *
+FROM  Production.UnitMeasureTest2
+
+INSERT INTO Production.UnitMeasureTest2 (UnitMeasureCode, Name, ModifiedDate)
+SELECT UnitMeasureCode, Name, ModifiedDate
+FROM Production.UnitMeasure
+WHERE UnitMeasureCode = 'CAN'
+
+SELECT *
+FROM Production.UnitMeasureTest2
+ORDER BY UnitMeasureCode
+
+C.
+
+UPDATE Production.UnitMeasureTest2
+SET UnitMeasureCode = 'TTT'
+
+SELECT *
+FROM Production.UnitMeasureTest2
+
+D.
+
+DELETE FROM Production.UnitMeasureTest2
+
+SELECT *
+FROM Production.UnitMeasureTest2
+
+E.
+
+SELECT SalesOrderID, LineTotal,
+       MAX(LineTotal) OVER (PARTITION BY SalesOrderID) AS "MAX",
+	   MIN(LineTotal) OVER (PARTITION BY SalesOrderID) AS "MIN",
+	   AVG(LineTotal) OVER (PARTITION BY SalesOrderID) AS "AVG"
+FROM Sales.SalesOrderDetail
+WHERE SalesOrderID IN (43659,43664)
+
+F.
+
+ANSWER: THIS YEAR Linda	Mitchell
+        LAST YEAR Ranjit Varkey Chudukatil
+
+SELECT FirstName, LastName,SalesLastYear,
+	   SalesYTD,
+       RANK() OVER (ORDER BY SalesYTD DESC) AS "RANK",
+	   UPPER(SUBSTRING(LastName, 1, 3)) + 'login' + 
+CASE 
+	WHEN TerritoryGroup IS NOT NULL THEN TerritoryGroup 
+	ELSE '' 
+END AS Login
+FROM Sales.vSalesPerson
+
+SELECT FirstName, LastName,SalesLastYear,
+       RANK() OVER (ORDER BY SalesLastYear DESC) AS "RANK LAST YEAR"
+FROM Sales.vSalesPerson
+
+G.
+
+SELECT 
+    DATEADD(DAY, 1 - DAY(GETDATE()), GETDATE()) AS "FIRSTDATE"
+
+EX. 5
+
+count(1) - ALL, 
+count(name) - A, B, 
+count(id) - 1,2,3,4, 
+count(*) - ALL
+
+
+
+
+
+

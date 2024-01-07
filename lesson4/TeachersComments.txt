@@ -1,0 +1,7 @@
+Well done!
+
+3
+Нет, как раз наоборот. Если значения будут одинаковые, то row number будет показывать 1-2-3-4, а rank и dense rank - 1-1-1-1.
+
+4.g
+It's solution for the first day of month, not first working day.

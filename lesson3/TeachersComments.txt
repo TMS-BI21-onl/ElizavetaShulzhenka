@@ -1,0 +1,7 @@
+Well done!
+
+2.b
+Filters for name should be divided by ().
+
+3.c
+You are not filtering by number of the special offers.

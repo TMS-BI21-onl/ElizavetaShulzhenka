@@ -1,0 +1,33 @@
+EX1
+
+1.
+
+SELECT *
+FROM Водители
+WHERE Стаж NOT IN (3, 5, 6,10) AND Место прописки = 'eee'
+
+2.
+
+SELECT НОМЕР ПАСПОРТА
+FROM Водители в
+LEFT JOIN Диспетчерская д ON в.Код Водителя = д.Код Водителя
+WHERE Путевка IS NULL
+
+3.
+
+SELECT а.рег номер, д.время прибытия, д.время отбытия, м.пункт назаначения
+FROM Автомобили а
+     JOIN Диспетчерская д ON а.Код авто = д.Код авто
+	 JOIN маршрут м. ON д.путевка = м. код маршрута
+WHERE а.год выпуска авто = 2015
+
+
+EX2
+
+
+3.
+
+SELECT SUBSTRING(first_name, 1, 1) AS first, COUNT(1) AS countempl
+FROM employess e
+     JOIN department d ON e.department_id = d.department_id
+WHERE d.manager_id IS NULL

@@ -1,0 +1,91 @@
+1.
+
+CREATE TABLE Patients
+( 
+  Id INT IDENTITY(1, 1) PRIMARY KEY,
+  FirstName NVARCHAR(100),
+  LastName  NVARCHAR(100),
+  SSN       NVARCHAR(100) UNIQUE,
+  Temp DECIMAL(3,1),
+  CreatedDate DATE
+  )
+
+SELECT *
+FROM Patients
+
+ALTER TABLE Patients
+ADD email AS (UPPER(LEFT(FirstName,1)) + LOWER(LEFT(LastName,3)) + '@mail.com')
+
+SELECT *
+FROM Patients
+
+2.
+
+INSERT INTO Patients (FirstName, LastName, SSN, Temp, CreatedDate)
+VALUES
+    ('Pitter','Smith','12-345-6789-1-23','37.1','2024-01-01'),
+    ('Kevin','Chi','12-JU5-GH89-1-23','36.6','2024-01-05'),
+	('Lara','Parker','62JO45-LO891-23','36.8','2024-01-13')
+
+SELECT *
+FROM Patients
+
+3.
+
+ALTER TABLE Patients
+ADD TempType AS
+CASE
+    WHEN Temp >37 THEN '> 37°C'
+	ELSE '< 37°C'
+	END
+
+SELECT *
+FROM Patients
+
+4.
+
+CREATE VIEW Patients_vPatiens
+AS
+SELECT id, FirstName, LastName, SSN, Temp,
+       TempF = Temp * 9 / 5 + 32 , CreatedDate
+FROM Patients
+
+SELECT *
+FROM Patients_vPatiens
+
+5.
+
+CREATE FUNCTION dbo.Patients_udPatiens(@Ctemp DECIMAL(3,1))
+RETURNS DECIMAL(3,1)
+AS
+BEGIN
+     RETURN @Ctemp * 9 / 5 + 32;
+END;
+
+SELECT dbo.Patients_udPatiens(37.1) Ftemp;
+
+
+HW4.
+
+SELECT
+  CASE 
+    WHEN DATEPART(dw, DATEADD(day, 1 - DATEPART(day, GETDATE()), GETDATE())) IN (1, 7) THEN 
+      CASE 
+        WHEN DATEPART(dw, DATEADD(day, 1 - DATEPART(day, GETDATE()), GETDATE())) = 1 THEN 
+          DATEADD(day, 1, DATEADD(day, 1 - DATEPART(day, GETDATE()), GETDATE()))
+        WHEN DATEPART(dw, DATEADD(day, 1 - DATEPART(day, GETDATE()), GETDATE())) = 7 THEN 
+          DATEADD(day, 2, DATEADD(day, 1 - DATEPART(day, GETDATE()), GETDATE()))
+      END
+    ELSE DATEADD(day, 1 - DATEPART(day, GETDATE()), GETDATE())
+  END AS FirstWeekdayOfMonth;
+
+TEST1/5
+
+  SELECT first_name, last_name
+  from Employees e
+  join job_history jh ON e.employeeID = jh.employeeID
+  WHERE 
+  CASE 
+      WHEN end_date IS NULL THEN 'CURENTLY WORKING'
+  ELSE 'LEFT THE COMPANY AT' + end_date
+  END

@@ -1,0 +1,4 @@
+ SELECT FirstName, LastName, ID_Father, f.FirstName, f.LastName
+ FROM people p
+ JOIN father f ON p.ID_Father =  f.ID_Father
+ WHERE p.FirstName = 'Дмитрий

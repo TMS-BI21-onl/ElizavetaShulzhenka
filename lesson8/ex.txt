@@ -1,0 +1,21 @@
+ex2.
+
+CREATE TABLE MillionPeople (
+    id int identity(1,1) PRIMARY KEY,
+    FirstName NVARCHAR(100) NOT NULL,
+    LastName NVARCHAR(100) NOT NULL
+)
+
+INSERT INTO MillionPeople (FirstName, LastName)
+SELECT TOP 1000000
+     n1.first_name,
+     n2.last_name
+FROM [dbo].[FIRST_NAMES] n1
+JOIN [dbo].[LAST_NAMES] n2;
+
+ SELECT COUNT(FirstName)
+ FROM MillionPeople
+
+ex3.
+"With" you can use it when you need a temporary query result.
+"With" used before the main request

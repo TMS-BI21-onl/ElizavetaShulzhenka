@@ -1,0 +1,40 @@
+ex1.
+
+SELECT p.FirstName, p.LastName, pp.PhoneNumber
+FROM Person.Person p
+JOIN Person.PersonPhone pp ON p.BusinessEntityID = pp.BusinessEntityID
+WHERE SUBSTRING(pp.PhoneNumber, 1, 1) = '4' AND
+      SUBSTRING(pp.PhoneNumber, LEN(pp.PhoneNumber), 1) = '5';
+
+ex2.
+
+SELECT BusinessEntityID,BirthDate,
+    CASE
+        WHEN DATEDIFF(YEAR, BirthDate, GETDATE()) BETWEEN 17 AND 20 THEN 'Adolescence'
+        WHEN DATEDIFF(YEAR, BirthDate, GETDATE()) BETWEEN 21 AND 59 THEN 'Adults'
+        WHEN DATEDIFF(YEAR, BirthDate, GETDATE()) BETWEEN 60 AND 75 THEN 'Elderly'
+        WHEN DATEDIFF(YEAR, BirthDate, GETDATE()) BETWEEN 76 AND 90 THEN 'Senile'
+        ELSE 'не подходит по критериям отбора'
+    END AS AgeCategory
+FROM HumanResources.Employee
+
+ex3.
+
+1.
+SELECT Color, MAX(StandardCost)
+FROM [Production].[Product]
+GROUP BY Color
+
+2.
+SELECT Color,StandardCost
+FROM (SELECT Color, StandardCost, ROW_NUMBER() OVER (PARTITION BY Color ORDER BY StandardCost DESC) AS RN
+      FROM Production.Product) T
+WHERE RN = 1;
+
+3.SELECT DISTINCT Color, StandardCost
+FROM Production.Product p
+WHERE StandardCost = (SELECT TOP 1 StandardCost
+                      FROM Production.Product p2
+		      WHERE p2.Color = p.Color 
+		      ORDER BY StandardCost DESC);
+

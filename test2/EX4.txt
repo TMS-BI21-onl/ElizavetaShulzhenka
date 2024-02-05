@@ -1,0 +1,30 @@
+TABLE1 (Employee):	EmployeeID	FirstName	LastName	Position	Salary	HireDate	
+							
+TABLE2 (Customer):	CustomerID	FirstName	LastName	PhoneNumber	Email		
+							
+TABLE3 (Table):	        TableID		TableNumber	Capacity	Status		
+							
+TABLE4 (Menu):		DishID		DishName	Description	Price	
+							
+TABLE5 (Order):		OrderID		DishID		Quantity	StatusOrder     TableNumber
+							
+TABLE6  (Payment):	PaymentID	Amount		OrderID		
+							
+TABLE7 FCT  (Sales):	SaleID	       OrderID	        DishID	       TableID	       CustomerID	EmployeeID	PaymentID
+
+
+
+1.
+ПОСАДИТЬ КОМПАНИЮ ИЗ 3Х ЧЕЛОВЕК ЗА СВОБОДНЫЙ СТОЛ
+
+SELECT  TableNumber, Capacity , Status	
+FROM Table
+WHERE Status = 'БЕЗ БРОНИ' AND Capacity >= 3
+
+
+2.
+УЗНАТЬ СТАТУС БЛЮД(ГОТОВО, НЕ ГОТОВО) И НАЗВАНИЯ БЛЮД НА З-ЕМ СТОЛЕ
+SELECT o.StatusOrder, m.DishName
+FROM Order o
+JOIN Menu m ON o.DishID = m.DishID
+WHERE TableNumber = 3

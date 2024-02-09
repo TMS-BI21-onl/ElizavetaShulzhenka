@@ -1,0 +1,39 @@
+CREATE TABLE Functions (
+    Function_name VARCHAR(50),
+    Function_count INT
+);
+
+
+MERGE Functions target
+USING ( SELECT Function_name, COUNT(*) AS Function_count
+	FROM( 
+	SELECT Alex Function_name FROM dbo.data_for_merge
+	UNION ALL 
+	SELECT Carlos Function_name FROM dbo.data_for_merge
+	UNION ALL 
+	SELECT Charles Function_name FROM dbo.data_for_merge
+	UNION ALL
+	SELECT Daniel Function_name FROM dbo.data_for_merge
+	UNION ALL
+	SELECT Esteban Function_name FROM dbo.data_for_merge
+	UNION ALL
+	SELECT Fred Function_name FROM dbo.data_for_merge
+	UNION ALL
+	SELECT George Function_name FROM dbo.data_for_merge
+	UNION ALL
+	SELECT Lando Function_name FROM dbo.data_for_merge
+	UNION ALL
+	SELECT Lewis Function_name FROM dbo.data_for_merge) AS T 
+	WHERE Function_name IS NOT NULL
+    GROUP BY Function_name
+) AS Source
+ON Target.Function_name = Source.Function_name
+WHEN MATCHED THEN
+    UPDATE SET Function_count = Source.Function_count
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (Function_name, Function_count) VALUES (Source.Function_name, Source.Function_count)
+WHEN NOT MATCHED BY SOURCE
+	THEN DELETE 
+	;
+
+SELECT* FROM Functions

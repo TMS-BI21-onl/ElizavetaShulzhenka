@@ -1,0 +1,19 @@
+EX1.
+
+
+SELECT FIO, [], [], [] -- Name_analysis
+FROM
+(SELECT  а.Name_analysis, а.ID-sotrudnik, с.FIO, 1 AS NOMBER
+FROM анализы а
+JOIN сштрудники с ON а.ID-sotrudnik = с.ID-sotrudnik) AS SourceTable  
+PIVOT
+(SUM(NOMBER)
+FOR Name_analysis IN ([], [], [])) AS PivotTable
+
+EX.2
+
+SELECT к.FIO, AVG(DATEDIFF('day', p.data_oplaty, д.Data_dogovora)) AS avg
+FROM клиент к
+JOIN договор д ON к.ID_Clien = д.ID_Clien
+JOIN оплата о ON д.ID_dogovor = о.ID_dogovor
+GROUP BY к.FIO

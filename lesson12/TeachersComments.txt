@@ -1,0 +1,3 @@
+Well done!
+
+The task was to insert rows from excel to the db, not vice versa.

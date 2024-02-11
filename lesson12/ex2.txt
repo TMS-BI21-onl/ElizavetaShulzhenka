@@ -1,0 +1,1 @@
+AdventureWorksDW2017 будет работать быстрее т.к. это OLAP, а AdventureWorks2017 это OLTP

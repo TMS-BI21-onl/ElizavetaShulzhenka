@@ -1,0 +1,30 @@
+EX1.
+
+SELECT TOP 50 WITH TIES p.PassengerID, p.FirstName, p.LastName, t.TicketsCount,
+            CASE 
+                WHEN t.TicketsCount >= 10 THEN 3
+                WHEN t.TicketsCount BETWEEN 5 AND 9 THEN 2
+                ELSE 1
+            END AS Points
+FROM (SELECT p.PassengerID, COUNT(t.TicketID) AS TicketsCount
+      FROM Passengers p
+      JOIN Tickets t ON p.PassengerID = t.PassengerID
+      WHERE DATEDIFF(WEEK, t.PurchaseDate, GETDATE()) < 2
+      GROUP BY p.PassengerID) t
+JOIN Passengers p ON t.PassengerID = p.PassengerID
+GROUP BY p.PassengerID, p.FirstName, p.LastName, t.TicketsCount
+ORDER BY Points DESC;
+
+EX2.
+
+a.
+
+Убрать легенду справа. Убрать фон. показатели сделать одним цветом
+
+b.
+
+убрать эфект 3Д, заменит фигуры на графике
+
+c.
+
+показатели подписать на графике, можно сднлать легенду
